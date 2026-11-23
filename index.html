@@ -591,7 +591,7 @@ function render(now){
       ctx.fillStyle='#FFD95E';ctx.beginPath();ctx.arc(0,0,sz*.74,0,6.2832);ctx.fill();
     }else{
       ctx.rotate(q.r);
-      if(q.k==='paper'){var fl=Math.cos(q.age*q.fl+q.ph),w=sz*2.1,h=sz*1.05*(Math.abs(fl)*.85+.15);ctx.fillStyle=shade(q.c,fl>0?q.sh:-.22);ctx.fillRect(-w/2,-h/2,w,h)}
+      if(q.k==='paper'){var fl=Math.cos(q.age*q.fl+q.ph),w=sz*1.5,h=sz*1.5*(Math.abs(fl)*.85+.15);ctx.fillStyle=shade(q.c,fl>0?q.sh:-.22);ctx.fillRect(-w/2,-h/2,w,h)}
       else if(q.k==='shard'){ctx.fillStyle=q.c.d;ctx.fillRect(-sz,-sz,sz*2,sz*2);ctx.fillStyle=q.c.hex;ctx.fillRect(-sz*.86,-sz*.86,sz*1.72,sz*1.5);ctx.fillStyle=q.c.l;ctx.fillRect(-sz*.86,-sz*.86,sz*1.72,sz*.5)}
       else{ctx.fillStyle=q.c;ctx.fillRect(-sz,-sz*.7,sz*2,sz*1.4)}
     }
