@@ -966,7 +966,8 @@ function solvable(b,list,budget){
   return false;
 }
 /* specials are introduced one per level: L1 none, L2 bombs, L3 crystals, L4 chests, L5+ all three */
-function specialKinds(){return level<=1?[]:level===2?['bomb']:level===3?['crystal']:level===4?['chest']:['chest','bomb','crystal']}
+var TEST_ALL_SPECIALS=true;
+function specialKinds(){return (TEST_ALL_SPECIALS&&level<=1)?['chest','bomb','crystal','skull']:level<=1?[]:level===2?['bomb']:level===3?['crystal']:level===4?['chest']:['chest','bomb','crystal']}
 function spawn(){
   var tries=0,set,sp=countSpecials(),kinds=specialKinds();
   do{
@@ -978,7 +979,7 @@ function spawn(){
         else{var gk=TUT_SET[1].join('/'),tt=0;do{rows=pickShape();tt++}while(tt<20&&(rows.join('/')===gk||(rows.join('').replace(/\./g,'').length>5)))}
       }else rows=firstSet?FIRST_SET[i]:pickShape();
       var p=parsePiece(rows,(start+i*(1+Math.floor(Math.random()*2)))%PAL.length);
-      if(!firstSet&&kinds.length&&sp<3&&Math.random()<.3){
+      if(!firstSet&&kinds.length&&sp<(TEST_ALL_SPECIALS&&level<=1?9:3)&&Math.random()<(TEST_ALL_SPECIALS&&level<=1?.65:.3)){
         var q=p.cells[Math.floor(Math.random()*p.cells.length)];
         q.t=kinds[(Math.random()*kinds.length)|0];sp++;
       }
