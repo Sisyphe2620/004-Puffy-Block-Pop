@@ -1009,7 +1009,7 @@ function solvable(b,list,budget){
   return false;
 }
 /* specials are introduced one per level: L1 none, L2 bombs, L3 crystals, L4 chests, L5+ all three */
-var TEST_ALL_SPECIALS=false;
+var TEST_ALL_SPECIALS=true;
 function specialKinds(){return (TEST_ALL_SPECIALS&&level<=1)?['chest','bomb','crystal','skull','star','balloon','wand','magnet']:level<=1?[]:level===2?['bomb']:level===3?['crystal']:level===4?['chest']:['chest','bomb','crystal'].concat(level>=6?['star']:[],level>=7?['balloon']:[],level>=8?['magnet']:[],level>=9?['wand']:[])}
 function spawn(){
   var tries=0,set,sp=countSpecials(),kinds=specialKinds();
