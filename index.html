@@ -486,7 +486,7 @@ function trayScale(p){
   var ex=p.w*Math.abs(CV[0])+p.h*Math.abs(RV[0]),ey=p.h*Math.abs(RV[1])+p.w*Math.abs(CV[1])+PITCH0*.75;
   return Math.max(.2,Math.min(.74,W*.28/ex,trayRect.h*.8/ey));
 }
-function sortedCells(p){return p.cells.slice().sort(function(a,b){return a.r-b.r||a.c-b.c})}
+function sortedCells(p){return p.cells.slice().sort(function(a,b){return a.r-b.r||b.c-a.c})}
 function drawTrayPiece(i,now){
   var g=trayG[i];if(!g||!g.visible)return;
   var p=g.p,f=trayScale(p)*g.sc,cx=slotX(i),cy=slotY()+Math.sin(now/700+i*2)*2.5+PITCH0*f*.3;
@@ -568,7 +568,7 @@ function render(now){
   ctx.globalAlpha=1;
   /* blocks (back rows first) */
   var items=nodes.concat(ghostN);
-  items.sort(function(a,b){return (a.z-b.z)||(a.x-b.x)});
+  items.sort(function(a,b){return (a.z-b.z)||(b.x-a.x)});
   for(i=0;i<items.length;i++){
     var n=items[i],P0=proj(n.x,n.y+(n.ghost?0:shockBump(n,now)),n.z);
     if(n.ghost){P0.gy=P0.y}else{var G0=proj(n.x,0,n.z);P0.gy=G0.y}
