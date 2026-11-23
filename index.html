@@ -1121,7 +1121,16 @@ function dragTarget(d){
     if(d.slot===TUT_SLOT&&Math.abs(row0-TUT_R)<=1&&Math.abs(col0-TUT_C)<=1){row0=TUT_R;col0=TUT_C}
     else return {row:row0,col:col0,ok:false,hx:hit.x,hz:hit.z};
   }
-  return {row:row0,col:col0,ok:fits(grid,p,row0,col0),hx:hit.x,hz:hit.z};
+  /* strong magnet: if the exact cell does not fit, snap to the nearest legal spot within ~1.7 cells of the finger */
+  var fc=hit.x-(p.w-1)/2+3.5,fr=hit.z-(p.h-1)/2+3.5,best=null,bd=1e9;
+  for(var dr=-2;dr<=2;dr++)for(var dc=-2;dc<=2;dc++){
+    var rr=Math.round(fr)+dr,cc=Math.round(fc)+dc;
+    if(!fits(grid,p,rr,cc))continue;
+    var dd=Math.hypot(rr-fr,cc-fc);
+    if(dd<bd){bd=dd;best=[rr,cc]}
+  }
+  if(best&&bd<=1.7)return {row:best[0],col:best[1],ok:true,hx:hit.x,hz:hit.z};
+  return {row:row0,col:col0,ok:false,hx:hit.x,hz:hit.z};
 }
 var lastKey='';
 function updatePreview(tg){
