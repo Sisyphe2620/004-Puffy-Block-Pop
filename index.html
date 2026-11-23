@@ -476,17 +476,17 @@ function shade(hex,f){
 function paper(x,y,z,color,n,speed,big){
   for(var i=0;i<n;i++){
     var a=Math.random()*6.283,s=(.5+Math.random())*speed;
-    parts.push({k:'paper',c:color,x:x,y:y,z:z,vx:Math.cos(a)*s,vy:2.2+Math.random()*4.2,vz:Math.sin(a)*s,age:0,life:1.2+Math.random()*.9,r:Math.random()*6,vr:(Math.random()-.5)*7,fl:6+Math.random()*7,ph:Math.random()*6.28,sz:(big?.13:.1)+Math.random()*.05,g:.42,floor:.1,bounce:.02,sh:i%3===0?.3:i%3===1?0:-.12});
+    parts.push({k:'paper',c:color,x:x,y:y,z:z,vx:Math.cos(a)*s,vy:3.5+Math.random()*7.5,vz:Math.sin(a)*s,age:0,life:1.5+Math.random()*1,dr:2.3,r:Math.random()*6,vr:(Math.random()-.5)*7,fl:6+Math.random()*7,ph:Math.random()*6.28,sz:(big?.13:.1)+Math.random()*.05,g:.42,floor:.1,bounce:.02,sh:i%3===0?.3:i%3===1?0:-.12});
   }
 }
-function confetti(x,y,z,color,n,speed){paper(x,y,z,color,Math.round(n*1.6),speed*.8,false)}
+function confetti(x,y,z,color,n,speed){paper(x,y,z,color,Math.round(n*1.7),speed*1.9,false)}
 function coinBurst(x,z,n){
   for(var i=0;i<n;i++){
     var a=Math.random()*6.283,s=1+Math.random()*2.2;
     parts.push({k:'coin',x:x,y:.9,z:z,vx:Math.cos(a)*s,vy:6+Math.random()*3,vz:Math.sin(a)*s,age:0,life:1.5,r:Math.random()*6,vr:9+Math.random()*6,sz:.17,floor:.12,bounce:.45});
   }
 }
-function shatter(x,z,ci){paper(x,.45,z,PAL[ci%PAL.length].hex,22,2.6,true)}
+function shatter(x,z,ci){paper(x,.45,z,PAL[ci%PAL.length].hex,30,4.4,true);tone(2600,0,.035,'square',.03,1100);tone(1700,.005,.07,'triangle',.04,500)}
 function popup(text,x,y,z,cls){
   var s=toScreen(x,y,z),d=document.createElement('div');
   d.className='pop '+(cls||'');d.textContent=text;d.style.left=s.x+'px';d.style.top=s.y+'px';
@@ -1582,7 +1582,7 @@ function frame(now){
   parts=parts.filter(function(q){
     q.age+=dt;
     if(q.age>=q.life)return false;
-    q.vy-=18*(q.g||1)*dt;if(q.k==='paper'){q.vx*=1-1.5*dt;q.vz*=1-1.5*dt;if(q.vy<-1.5)q.vy=-1.5}q.x+=q.vx*dt;q.y+=q.vy*dt;q.z+=q.vz*dt;
+    q.vy-=18*(q.g||1)*dt;if(q.k==='paper'){q.vx*=1-(q.dr||1.5)*dt;q.vz*=1-(q.dr||1.5)*dt;if(q.vy<-1.5)q.vy=-1.5}q.x+=q.vx*dt;q.y+=q.vy*dt;q.z+=q.vz*dt;
     if(q.y<q.floor){q.y=q.floor;q.vy=Math.abs(q.vy)*(q.bounce||.2);q.vx*=.8;q.vz*=.8}
     q.r+=q.vr*dt;
     return true;
